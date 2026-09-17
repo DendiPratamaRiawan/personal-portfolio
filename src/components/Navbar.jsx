@@ -1,13 +1,20 @@
 import { useState } from 'react';
 import { Moon, Sun, Menu, X } from 'lucide-react';
-
+import logoImg from '../assets/logo.png'; 
 export default function Navbar({ darkMode, setDarkMode }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-40 border-b border-slate-200 dark:border-slate-800 transition-colors">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="#" className="text-2xl font-black text-blue-600 dark:text-blue-400 tracking-wider">DR</a>
+        {/* Replacement: DR diganti menggunakan Logo Image */}
+        <a href="#" className="flex items-center">
+          <img 
+            src={logoImg} 
+            alt="Logo" 
+            className="h-8 w-auto object-contain hover:scale-105 transition-transform" 
+          />
+        </a>
         
         <div className="hidden md:flex space-x-8 font-medium text-slate-700 dark:text-slate-200">
           <a href="#about" className="hover:text-blue-600 transition">About</a>

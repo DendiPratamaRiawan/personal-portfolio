@@ -76,7 +76,7 @@ export default function Hero() {
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
                 </svg>
               </a>
-              <a href="www.linkedin.com/in/dendipratamar" className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600 transition" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/in/dendipratamar" className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600 transition" aria-label="LinkedIn">
                 <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                 </svg>
@@ -126,30 +126,17 @@ export default function Hero() {
           transition={{ duration: 0.5 }}
           className="flex flex-col gap-6 items-center"
         >
-          {/* Main Profile Image (Ukuran Diperbesar) */}
-          <div className="relative w-full max-w-sm flex justify-center items-end py-4">
-            <div className="absolute top-2 w-full h-[95%] bg-gradient-to-tr from-blue-500/30 via-indigo-500/30 to-sky-400/30 dark:from-blue-600/40 dark:to-cyan-500/40 rounded-[30%_70%_70%_30%/30%_30%_70%_70%] blur-2xl -z-10 scale-110" />
-            <div className="absolute top-4 w-[90%] h-[85%] bg-blue-100 dark:bg-blue-950/60 rounded-3xl -z-10 border border-blue-200/50 dark:border-blue-700/30 shadow-lg" />
+          {/* Main Profile Image Frame (Clean & Professional) */}
+          <div className="relative w-full max-w-sm flex justify-center items-end pt-6">
+            {/* Background Card Sederhana & Clean */}
+            <div className="absolute inset-x-2 bottom-0 h-[86%] bg-slate-100 dark:bg-slate-800/90 rounded-3xl border border-slate-200 dark:border-slate-700/60 shadow-sm" />
 
-            <div className="absolute top-0 right-2 text-blue-500 font-bold text-lg select-none animate-pulse">
-              ✦
-            </div>
-
-            {/* Foto profil diperbesar dari w-[82%] ke w-[92%] */}
+            {/* Foto Profil Utama */}
             <img 
               src={profileImg} 
               alt="Main Profile" 
-              className="w-[85%] h-auto object-contain z-10 hover:scale-105 transition-transform duration-500 ease-in-out cursor-pointer" 
+              className="relative w-[82%] h-auto object-contain z-10 filter drop-shadow-md transition-transform duration-300 hover:scale-[1.02]" 
             />
-
-            {/* OPSI 1: Garis Bawah Cyber Neon Dual-Tone (Disesuaikan Lebarnya) */}
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[95%] z-20 flex flex-col items-center pointer-events-none">
-              <div className="w-full h-10 bg-gradient-to-t from-white dark:from-slate-900 to-transparent" />
-              <div className="relative w-full flex justify-center -mt-2">
-                <div className="w-4/5 h-[3px] bg-gradient-to-r from-transparent via-blue-500 to-cyan-400 rounded-full shadow-[0_0_12px_rgba(59,130,246,0.8)]" />
-                <div className="absolute -bottom-1.5 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent rounded-full opacity-70 blur-[0.5px]" />
-              </div>
-            </div>
           </div>
 
           {/* 4 Grid Foto Sub-Activities (Ukuran Besar) */}

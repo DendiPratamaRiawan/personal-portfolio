@@ -1,6 +1,9 @@
 import simagangImg from '../assets/simagang.jpg';
+import GotokoImg from '../assets/Gotoko.jpg';
+import kipKUImg from '../assets/KipKu.jpg';
 import BLKImg from '../assets/BLKcertif.png';
 import cyberImg from '../assets/cyber.png';
+
 
 export const portfolioData = {
   name: "Dendi Pratama Riawan",
@@ -10,7 +13,7 @@ export const portfolioData = {
     "IT Support Specialist", 
     "Junior Cyber Security"
   ],
-  about: "Undergraduate Informatics student at Universitas Faletehan with a GPA of 3.83, demonstrating strong integrity, responsibility, and a high commitment to continuous learning. Highly interested in IT Support and Network Engineering, with hands-on experience in troubleshooting computer hardware and software, as well as basic network configuration and maintenance. Actively developing technical skills through training and certifications. Passionate about working with hardware systems, software environments, and computer networks. Equipped with strong communication skills, the ability to work effectively in a team, and a readiness to take on challenges in the IT industry.",
+  about: "Undergraduate Informatics student at Universitas Faletehan, demonstrating strong integrity, responsibility, and a high commitment to continuous learning. Highly interested in IT Support and Network Engineering, with hands-on experience in troubleshooting computer hardware and software, as well as basic network configuration and maintenance. Actively developing technical skills through training and certifications. Passionate about working with hardware systems, software environments, and computer networks. Equipped with strong communication skills, the ability to work effectively in a team, and a readiness to take on challenges in the IT industry.",
 
   skills: [
     "Network Configuration", 
@@ -113,6 +116,22 @@ export const portfolioData = {
       tech: ["React Native Expo SDK 54", "Firebase", "MobileFaceNet TFLite", "OpenStreetMap"],
       date: "2026",
       img: simagangImg,
+      github: "#" 
+    },
+        { 
+      title: "FinMahasiswa APP", 
+      desc: "FinMahasiswa adalah aplikasi manajemen keuangan personal yang dirancang khusus untuk memenuhi kebutuhan mahasiswa, khususnya penerima beasiswa KIP-Kuliah. Aplikasi ini membantu pengguna mengelola uang saku, pencairan beasiswa, serta pengeluaran bulanan secara terstruktur melalui antarmuka yang intuitif dan mudah digunakan.", 
+      tech: ["React Native Expo SDK 54", "Firebase"],
+      date: "2026",
+      img: kipKUImg,
+      github: "https://github.com/rosi1598201-cpu/KipKu-PPM2.git" 
+    },
+            { 
+      title: "GoToko.id APP", 
+      desc: "GoToko.id adalah aplikasi e-commerce berbasis mobile yang dirancang untuk memberikan pengalaman belanja online yang ringkas dan intuitif. Aplikasi ini dilengkapi dengan alur otentikasi pengguna, eksplorasi katalog produk berdasarkan kategori (Fashion, Elektronik, Aksesoris), penelusuran produk unggulan, serta manajemen keranjang belanja (cart) secara real-time melalui navigasi bawah yang responsif.", 
+      tech: ["React Native Expo SDK 54", "Firebase"],
+      date: "2025",
+      img: GotokoImg,
       github: "#" 
     }
   ],
