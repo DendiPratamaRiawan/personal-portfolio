@@ -27,7 +27,7 @@ export default function SkillsExperience() {
               Skill and Experience
             </h2>
             <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
-              Saya memiliki pengalaman dalam bidang jaringan dan IT support, serta terbiasa dalam troubleshooting perangkat keras dan lunak. Berikut adalah beberapa skill yang saya kuasai:
+              I've experience in networking and IT support, and I'm proficient in troubleshooting hardware and software. Here are some of the skills my possess:
             </p>
 
             {/* Grid Skill Item */}

@@ -13,7 +13,7 @@ export const portfolioData = {
     "IT Support Specialist", 
     "Junior Cyber Security"
   ],
-  about: "Undergraduate Informatics student at Universitas Faletehan, demonstrating strong integrity, responsibility, and a high commitment to continuous learning. Highly interested in IT Support and Network Engineering, with hands-on experience in troubleshooting computer hardware and software, as well as basic network configuration and maintenance. Actively developing technical skills through training and certifications. Passionate about working with hardware systems, software environments, and computer networks. Equipped with strong communication skills, the ability to work effectively in a team, and a readiness to take on challenges in the IT industry.",
+  about: "Undergraduate Informatics student at Universitas Faletehan, demonstrating strong integrity, responsibility, and a high commitment to continuous learning. Highly interested in IT Support and Network Engineering, with hands on experience in troubleshooting computer hardware and software, as well as basic network configuration and maintenance. Actively developing technical skills through training and certifications. Passionate about working with hardware systems, software environments, and computer networks. Equipped with strong communication skills, the ability to work effectively in a team, and a readiness to take on challenges in the IT industry.",
 
   skills: [
     "Network Configuration", 
@@ -25,9 +25,9 @@ export const portfolioData = {
     "Microsoft 365",
     "Python & Flask", 
     "React Native & Expo", 
-    "Tailwind CSS",
-    "IoT", 
+    "Tailwind CSS", 
     "Supabase", 
+    "MySql",
     "Firebase", 
     "Raspberry Pi", 
     "Bug Tracking", 
@@ -52,12 +52,12 @@ export const portfolioData = {
 
   education: [
     { 
-      degree: "B.S. in Informatics Engineering (GPA: 3.82 / 4.00)", 
+      degree: "Informatics Engineering (GPA: 3.81 / 4.00)", 
       institution: "Universitas Faletehan", 
       date: "2023 - Present" 
     },
     { 
-      degree: "Social Sciences Major", 
+      degree: "IPS", 
       institution: "SMA Negeri 2 Rangkasbitung", 
       date: "2020 - 2023" 
     }
@@ -70,7 +70,7 @@ export const portfolioData = {
       date: "2025 - 2026" 
     },
     { 
-      role: "Head of Information & Communication Division", 
+      role: "Head of Issues & Da'wah Division", 
       organization: "UKM Kerohanian Islam", 
       date: "2023 - 2025" 
     }
@@ -79,7 +79,7 @@ export const portfolioData = {
   volunteers: [
     { 
       role: "Head of Volunteer", 
-      organization: "Faletehan Menyapa Desa, Student Executive Board", 
+      organization: "Faletehan Menyapa Desa (FMD), BEM Universitas Faletehan", 
       date: "2026" 
     },
     { 
