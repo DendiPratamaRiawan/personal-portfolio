@@ -65,7 +65,7 @@ export default function Contact() {
               </div>
               <div>
                 <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Phone / WhatsApp</p>
-                <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">+62 85881837295</p>
+                <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">087768808324</p>
               </div>
             </div>
 
