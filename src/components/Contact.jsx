@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import emailjs from '@emailjs/browser';
 import toast from 'react-hot-toast';
 import { Send, MapPin, Phone, Mail, Loader2, MessageSquare } from 'lucide-react';
 
@@ -7,24 +6,34 @@ export default function Contact() {
   const formRef = useRef();
   const [loading, setLoading] = useState(false);
 
-  const sendEmail = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    emailjs.sendForm(
-      'YOUR_SERVICE_ID', 
-      'YOUR_TEMPLATE_ID', 
-      formRef.current, 
-      'YOUR_PUBLIC_KEY'
-    )
-    .then(() => {
-      toast.success('Pesan Anda berhasil terkirim!');
-      formRef.current.reset();
+    const formData = new FormData(formRef.current);
+
+    try {
+      const response = await fetch('https://formspree.io/f/xrpbbraa', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success('Pesan Anda berhasil terkirim!');
+        formRef.current.reset();
+      } else {
+        toast.error(data.error || 'Gagal mengirim pesan, silakan coba lagi.');
+      }
+    } catch (error) {
+      toast.error('Terjadi kesalahan jaringan, silakan coba lagi.');
+    } finally {
       setLoading(false);
-    }, (error) => {
-      toast.error('Gagal mengirim pesan, silakan coba lagi.');
-      setLoading(false);
-    });
+    }
   };
 
   return (
@@ -89,7 +98,7 @@ export default function Contact() {
 
           <form 
             ref={formRef} 
-            onSubmit={sendEmail} 
+            onSubmit={handleSubmit} 
             className="relative space-y-5 bg-white dark:bg-slate-900/90 backdrop-blur-xl p-8 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none"
           >
             <div className="flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
@@ -102,7 +111,7 @@ export default function Contact() {
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Your Name</label>
                 <input 
                   type="text" 
-                  name="user_name" 
+                  name="name" 
                   placeholder="John Doe"
                   required 
                   className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700/70 bg-slate-50/50 dark:bg-slate-800/50 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:bg-white dark:focus:bg-slate-900 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none text-sm transition-all duration-200" 
@@ -113,7 +122,7 @@ export default function Contact() {
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Your Email</label>
                 <input 
                   type="email" 
-                  name="user_email" 
+                  name="email" 
                   placeholder="john@example.com"
                   required 
                   className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700/70 bg-slate-50/50 dark:bg-slate-800/50 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:bg-white dark:focus:bg-slate-900 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none text-sm transition-all duration-200" 

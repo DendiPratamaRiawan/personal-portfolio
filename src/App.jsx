@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -16,9 +16,10 @@ export default function App() {
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
+    // Waktu timer dikembalikan ke 2200ms (2.2 detik) agar durasinya pas & elegan
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1800);
+    }, 2200);
     return () => clearTimeout(timer);
   }, []);
 
@@ -42,24 +43,52 @@ export default function App() {
       </div>
 
       <div className="relative z-10">
-        <Toaster position="bottom-right" />
+        {/* Toaster diposisikan di top-center dengan gaya modern dan elegan */}
+        <Toaster 
+          position="top-center" 
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: '#1e293b',
+              color: '#fff',
+              borderRadius: '12px',
+              padding: '12px 16px',
+              fontSize: '14px',
+              boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.2)',
+            },
+            success: {
+              iconTheme: {
+                primary: '#3b82f6',
+                secondary: '#fff',
+              },
+            },
+          }}
+        />
+        
+        {/* Preloader berjalan di atas menggunakan AnimatePresence */}
         <AnimatePresence>
           {loading && <Preloader key="loader" />}
         </AnimatePresence>
 
-        {!loading && (
-          <>
-            <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-            <main>
-              <Hero />
-              <SkillsExperience />
-              <PortfolioSection />
-              <Services />
-              <Contact />
-            </main>
-            <Footer />
-          </>
-        )}
+        {/* 
+          Seluruh konten website sudah dirender di background, 
+          sehingga saat preloader naik, transisinya sangat mulus tanpa jeda/lag! 
+        */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: loading ? 0 : 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+          <main>
+            <Hero />
+            <SkillsExperience />
+            <PortfolioSection />
+            <Services />
+            <Contact />
+          </main>
+          <Footer />
+        </motion.div>
       </div>
     </div>
   );

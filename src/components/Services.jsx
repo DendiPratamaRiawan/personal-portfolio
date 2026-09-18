@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
+import SpotlightCard from './SpotlightCard';
 
 export default function Services() {
   return (
@@ -19,7 +20,7 @@ export default function Services() {
         </a>
       </div>
 
-      {/* Grid Services (4 Kolom) */}
+      {/* Grid Services (4 Kolom) dengan Spotlight Card */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {portfolioData.services.map((srv, idx) => (
           <motion.div 
@@ -28,21 +29,25 @@ export default function Services() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: idx * 0.1 }}
-            className="p-5 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-2xl flex flex-col justify-between hover:border-blue-500 hover:shadow-lg transition group"
           >
-            <div>
-              <div className="flex items-center justify-between mb-1">
-                <h3 className="font-bold text-slate-900 dark:text-white text-base group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {srv.title}
-                </h3>
+            <SpotlightCard 
+              className="p-5 flex flex-col justify-between h-full group"
+              spotlightColor="rgba(0, 229, 255, 0.2)"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <h3 className="font-bold text-slate-900 dark:text-white text-base group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    {srv.title}
+                  </h3>
+                </div>
+                <span className="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 mb-2">
+                  {srv.level}
+                </span>
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  {srv.desc}
+                </p>
               </div>
-              <span className="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 mb-2">
-                {srv.level}
-              </span>
-              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                {srv.desc}
-              </p>
-            </div>
+            </SpotlightCard>
           </motion.div>
         ))}
       </div>

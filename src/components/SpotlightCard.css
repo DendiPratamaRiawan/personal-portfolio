@@ -1,0 +1,54 @@
+.card-spotlight {
+  position: relative;
+  border-radius: 1.5rem;
+  /* Border tipis yang elegan */
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  /* Background putih bersih di mode terang, dan slate gelap elegan di mode dark */
+  background-color: #ffffff;
+  padding: 2rem;
+  overflow: hidden;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  /* Warna sorotan kursor yang lebih cerah, terang, dan hidup (Electric Cyan/Blue) */
+  --spotlight-color: rgba(14, 165, 233, 0.18);
+}
+
+.dark .card-spotlight {
+  background-color: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(51, 65, 85, 0.8);
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.3);
+}
+
+.card-spotlight:hover {
+  border-color: #38bdf8;
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px -15px rgba(14, 165, 233, 0.2);
+}
+
+.card-spotlight::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle 280px at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 75%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card-spotlight:hover::before,
+.card-spotlight:focus-within::before {
+  opacity: 1;
+}
+
+/* Memastikan konten kartu berada di atas lapisan animasi sorotan */
+.card-spotlight > * {
+  position: relative;
+  z-index: 2;
+}
