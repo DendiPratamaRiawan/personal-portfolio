@@ -30,7 +30,7 @@ export default function Preloader() {
           </div>
         </motion.div>
 
-        <motion.h1
+        <motion.p
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.25 }}
@@ -38,7 +38,7 @@ export default function Preloader() {
         >
           Welcome to my <br />
           <span className="text-[#2200dc]">Portfolio Website</span>
-        </motion.h1>
+        </motion.p>
 
         <motion.div
           initial={{ width: 0 }}
