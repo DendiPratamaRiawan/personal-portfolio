@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import SkillsExperience from './components/SkillsExperience';
 import PortfolioSection from './components/PortfolioSection';
+import Publications from './components/Publications';
 import Services from './components/Services';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -84,6 +85,7 @@ export default function App() {
             <Hero />
             <SkillsExperience />
             <PortfolioSection />
+            <Publications />
             <Services />
             <Contact />
           </main>

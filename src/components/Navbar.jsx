@@ -20,6 +20,7 @@ export default function Navbar({ darkMode, setDarkMode }) {
           <a href="#about" className="hover:text-blue-600 transition">About</a>
           <a href="#skills" className="hover:text-blue-600 transition">Skill</a>
           <a href="#portfolio" className="hover:text-blue-600 transition">Certifikat & Project</a>
+          <a href="#publications" className="hover:text-blue-600 transition">Publikasi</a>
           <a href="#services" className="hover:text-blue-600 transition">Service</a>
           <a href="#contact" className="hover:text-blue-600 transition">Contact</a>
         </div>
@@ -43,6 +44,7 @@ export default function Navbar({ darkMode, setDarkMode }) {
           <a href="#about" onClick={()=>setIsOpen(false)} className="block text-slate-700 dark:text-slate-200">About</a>
           <a href="#skills" onClick={()=>setIsOpen(false)} className="block text-slate-700 dark:text-slate-200">Skill</a>
           <a href="#portfolio" onClick={()=>setIsOpen(false)} className="block text-slate-700 dark:text-slate-200">Certifikat & Project</a>
+          <a href="#publications" onClick={()=>setIsOpen(false)} className="block text-slate-700 dark:text-slate-200">Publikasi</a>
           <a href="#services" onClick={()=>setIsOpen(false)} className="block text-slate-700 dark:text-slate-200">Service</a>
           <a href="#contact" onClick={()=>setIsOpen(false)} className="block text-slate-700 dark:text-slate-200">Contact</a>
         </div>

@@ -106,6 +106,23 @@ export const portfolioData = {
     }
   ],
 
+  publications: [
+    {
+      title: "Penguatan Keterampilan Praktik Mahasiswa Kebidanan melalui Uji Kelayakan dan Pemanfaatan SMARTHOM (Simulator Persalinan) di Laboratorium Universitas Faletehan",
+      authors: "Feling Polwandari, Dewi Rahmawati, Muchamad Fajar Arifin, Sita Aulia Adzani, Rindiani Rindiani, Kaila Amatul Azhar, Dendi Pratama Riawan",
+      venue: "SAFARI: Jurnal Pengabdian Masyarakat Indonesia, Vol. 6 No. 1 (2026)",
+      date: "2025",
+      link: "https://doi.org/10.56910/safari.v6i1.3402"
+    },
+    {
+      title: "Application of Logistic Regression Method for Predicting Diabetes Mellitus",
+      authors: "Dendi Pratama Riawan, Dede Brahma Arianto",
+      venue: "Ambidextrous: Journal of Innovation, Efficiency and Technology in Organization, Vol. 4 No. 3 (2026), pp. 204–211",
+      date: "2026",
+      link: "https://journal.takaza.id/index.php/ambidextrous/article/view/539"
+    }
+  ],
+
   awards: [
   ],
 
