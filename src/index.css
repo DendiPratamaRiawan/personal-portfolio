@@ -1,3 +1,71 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --paper: 247 249 252;
+    --surface: 255 255 255;
+    --ink: 15 23 42;
+    --muted: 100 116 139;
+    --line: 15 23 42;
+    --accent: 47 107 255;
+    --sky: 228 238 255;
+    --sun: 255 196 61;
+    --mint: 20 184 166;
+    --coral: 255 112 102;
+    --signal: 22 163 74;
+    color-scheme: light;
+  }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+  ::selection { background: rgb(var(--sun)); color: rgb(var(--ink)); }
+  h1, h2, h3, h4 { @apply font-display; letter-spacing: -0.02em; }
+  :focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 3px; }
+}
+
+@layer components {
+  .container-x { @apply mx-auto w-full max-w-6xl px-4 sm:px-6; }
+  .hairline { border-color: rgb(var(--line) / 0.08); }
+  .label-mono { @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-muted; }
+  .dot-grid {
+    background-image: radial-gradient(rgb(var(--accent) / 0.16) 1.2px, transparent 1.2px);
+    background-size: 22px 22px;
+  }
+  .card { @apply rounded-3xl border hairline bg-surface shadow-soft; }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 active:scale-[0.97];
+  }
+  .btn-primary { @apply btn bg-accent text-white shadow-lift hover:-translate-y-0.5 hover:bg-[#1f5af0]; }
+  .btn-ghost { @apply btn border border-ink/10 bg-surface text-ink hover:-translate-y-0.5 hover:border-accent hover:text-accent; }
+
+  /* Stabilo kuning di belakang teks */
+  .marker {
+    background-image: linear-gradient(transparent 58%, rgb(var(--sun)) 58%, rgb(var(--sun)) 92%, transparent 92%);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* Trek slider: tepi kiri sejajar container, kanan menembus layar */
+  .slider-track {
+    @apply flex snap-x snap-mandatory gap-4 overflow-x-auto pb-6 pt-2 sm:gap-6;
+    scrollbar-width: none;
+    padding-inline: max(1rem, calc((100vw - 72rem) / 2 + 1.5rem));
+    scroll-padding-inline: max(1rem, calc((100vw - 72rem) / 2 + 1.5rem));
+  }
+  @media (max-width: 639px) {
+    .slider-track { padding-inline: 1rem; scroll-padding-inline: 1rem; }
+  }
+
+  .slider-track::-webkit-scrollbar, .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

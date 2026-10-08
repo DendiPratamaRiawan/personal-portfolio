@@ -1,95 +1,40 @@
-import { useState, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { AnimatePresence, motion } from 'framer-motion';
-import Preloader from './components/Preloader';
+import { MotionConfig } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import SkillsExperience from './components/SkillsExperience';
-import PortfolioSection from './components/PortfolioSection';
+import { About, Skills } from './components/About';
+import Experience from './components/Experience';
+import Activities from './components/Activities';
+import Projects from './components/Projects';
 import Services from './components/Services';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import Particles from './components/Particles';
+import { usePortfolioData } from './hooks/usePortfolioData';
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
+  const { data } = usePortfolioData();
 
-  useEffect(() => {
-    // Waktu timer dikembalikan ke 2200ms (2.2 detik) agar durasinya pas & elegan
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2200);
-    return () => clearTimeout(timer);
-  }, []);
+  const posts = data.news.filter((n) => n.category !== 'berita');
+  const media = data.news.filter((n) => n.category === 'berita');
+  const hasActivities = posts.length + media.length + data.activities.length > 0;
+
+  const links = ['about', 'skills', 'experience', hasActivities && 'activities', 'projects', 'services', 'contact'].filter(Boolean).map((id) => ({ id }));
 
   return (
-    <div className={darkMode ? 'dark bg-slate-900 min-h-screen text-slate-100 relative' : 'bg-white min-h-screen text-slate-900 relative'}>
-      
-      {/* Background Particles Full Layar */}
-      <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 0, pointerEvents: 'none' }}>
-        <Particles
-          particleColors={["#2200dc"]}
-          particleCount={300}
-          particleSpread={15}
-          speed={0.1}
-          particleBaseSize={120}
-          sizeRandomness={1}
-          moveParticlesOnHover={true}
-          alphaParticles={true}
-          disableRotation={false}
-          pixelRatio={1}
-        />
-      </div>
-
-      <div className="relative z-10">
-        {/* Toaster diposisikan di top-center dengan gaya modern dan elegan */}
-        <Toaster 
-          position="top-center" 
-          toastOptions={{
-            duration: 4000,
-            style: {
-              background: '#1e293b',
-              color: '#fff',
-              borderRadius: '12px',
-              padding: '12px 16px',
-              fontSize: '14px',
-              boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.2)',
-            },
-            success: {
-              iconTheme: {
-                primary: '#3b82f6',
-                secondary: '#fff',
-              },
-            },
-          }}
-        />
-        
-        {/* Preloader berjalan di atas menggunakan AnimatePresence */}
-        <AnimatePresence>
-          {loading && <Preloader key="loader" />}
-        </AnimatePresence>
-
-        {/* 
-          Seluruh konten website sudah dirender di background, 
-          sehingga saat preloader naik, transisinya sangat mulus tanpa jeda/lag! 
-        */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: loading ? 0 : 1 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
-          <main>
-            <Hero />
-            <SkillsExperience />
-            <PortfolioSection />
-            <Services />
-            <Contact />
-          </main>
-          <Footer />
-        </motion.div>
-      </div>
-    </div>
+    <MotionConfig reducedMotion="user">
+      <Toaster position="top-center" toastOptions={{ style: { borderRadius: '999px', fontSize: '14px', fontWeight: 600 } }} />
+      <Navbar links={links} />
+      <main className="overflow-x-clip">
+        <Hero data={data} />
+        <About profile={data.profile} experiences={data.experiences} />
+        <Skills skills={data.skills} />
+        <Experience experiences={data.experiences} />
+        {hasActivities && <Activities posts={posts} media={media} photos={data.activities} />}
+        <Projects projects={data.projects} certificates={data.certificates} />
+        <Services services={data.services} />
+        <Contact profile={data.profile} />
+      </main>
+      <Footer profile={data.profile} links={links} />
+    </MotionConfig>
   );
 }

@@ -1,52 +1,115 @@
-import { useState } from 'react';
-import { Moon, Sun, Menu, X } from 'lucide-react';
-import logoImg from '../assets/logo.png'; 
-export default function Navbar({ darkMode, setDarkMode }) {
-  const [isOpen, setIsOpen] = useState(false);
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
+import Logo from './Logo';
+import { useLang } from '../i18n';
+
+export function LangSwitch({ className = '' }) {
+  const { lang, setLang } = useLang();
+  return (
+    <div className={`flex rounded-full bg-ink/[0.05] p-1 text-xs font-bold ${className}`} role="group" aria-label="Bahasa / Language">
+      {['id', 'en'].map((l) => (
+        <button
+          key={l}
+          onClick={() => setLang(l)}
+          aria-pressed={lang === l}
+          className={`relative rounded-full px-3 py-1.5 uppercase transition-colors ${lang === l ? 'text-white' : 'text-muted hover:text-ink'}`}
+        >
+          {lang === l && <motion.span layoutId="lang-pill" className="absolute inset-0 rounded-full bg-ink" transition={{ type: 'spring', stiffness: 450, damping: 35 }} />}
+          <span className="relative">{l}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+export default function Navbar({ links }) {
+  const { t } = useLang();
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState('');
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)), {
+      rootMargin: '-40% 0px -55% 0px',
+    });
+    links.forEach((l) => {
+      const el = document.getElementById(l.id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [links]);
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-40 border-b border-slate-200 dark:border-slate-800 transition-colors">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        {/* Replacement: DR diganti menggunakan Logo Image */}
-        <a href="#" className="flex items-center">
-          <img 
-            src={logoImg} 
-            alt="Logo" 
-            className="h-8 w-auto object-contain hover:scale-105 transition-transform" 
-          />
+    <header className="fixed inset-x-0 top-0 z-40 px-3 pt-3 sm:px-5">
+      <nav
+        className={`mx-auto flex max-w-6xl items-center justify-between gap-4 rounded-2xl px-3 py-2.5 transition-all duration-300 sm:px-4 ${
+          scrolled || open ? 'bg-surface/90 shadow-soft ring-1 ring-ink/5 backdrop-blur-lg' : ''
+        }`}
+      >
+        <a href="#home" onClick={() => setOpen(false)} aria-label="Home">
+          <Logo size={38} />
         </a>
-        
-        <div className="hidden md:flex space-x-8 font-medium text-slate-700 dark:text-slate-200">
-          <a href="#about" className="hover:text-blue-600 transition">About</a>
-          <a href="#skills" className="hover:text-blue-600 transition">Skill</a>
-          <a href="#portfolio" className="hover:text-blue-600 transition">Certifikat & Project</a>
-          <a href="#services" className="hover:text-blue-600 transition">Service</a>
-          <a href="#contact" className="hover:text-blue-600 transition">Contact</a>
-        </div>
 
-        <div className="flex items-center space-x-4">
-          <button 
-            onClick={() => setDarkMode(!darkMode)}
-            className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:ring-2 ring-blue-400 transition"
+        <ul className="hidden items-center gap-1 lg:flex">
+          {links.map((l) => (
+            <li key={l.id}>
+              <a
+                href={`#${l.id}`}
+                className={`rounded-full px-3.5 py-2 text-sm font-semibold transition-colors ${active === l.id ? 'bg-sky text-accent' : 'text-muted hover:text-ink'}`}
+              >
+                {t(`nav.${l.id}`)}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex items-center gap-2">
+          <LangSwitch />
+          <a href="#contact" className="btn-primary hidden !py-2 sm:inline-flex">
+            {t('cta.contact')}
+          </a>
+          <button onClick={() => setOpen((o) => !o)} aria-label="Menu" aria-expanded={open} className="grid h-10 w-10 place-items-center rounded-xl bg-ink text-white lg:hidden">
+            {open ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
+      </nav>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            className="mx-auto mt-2 max-w-6xl rounded-2xl bg-surface p-3 shadow-soft ring-1 ring-ink/5 lg:hidden"
           >
-            {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
-          
-          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-slate-700 dark:text-slate-200">
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </div>
-
-      {isOpen && (
-        <div className="md:hidden bg-white dark:bg-slate-900 px-6 py-4 space-y-4 border-b border-slate-200 dark:border-slate-800">
-          <a href="#about" onClick={()=>setIsOpen(false)} className="block text-slate-700 dark:text-slate-200">About</a>
-          <a href="#skills" onClick={()=>setIsOpen(false)} className="block text-slate-700 dark:text-slate-200">Skill</a>
-          <a href="#portfolio" onClick={()=>setIsOpen(false)} className="block text-slate-700 dark:text-slate-200">Certifikat & Project</a>
-          <a href="#services" onClick={()=>setIsOpen(false)} className="block text-slate-700 dark:text-slate-200">Service</a>
-          <a href="#contact" onClick={()=>setIsOpen(false)} className="block text-slate-700 dark:text-slate-200">Contact</a>
-        </div>
-      )}
-    </nav>
+            <ul className="grid grid-cols-2 gap-1">
+              {links.map((l) => (
+                <li key={l.id}>
+                  <a
+                    href={`#${l.id}`}
+                    onClick={() => setOpen(false)}
+                    className={`block rounded-xl px-4 py-3 font-semibold ${active === l.id ? 'bg-sky text-accent' : 'hover:bg-paper'}`}
+                  >
+                    {t(`nav.${l.id}`)}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a href="#contact" onClick={() => setOpen(false)} className="btn-primary mt-3 w-full">
+              {t('cta.contact')}
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 }

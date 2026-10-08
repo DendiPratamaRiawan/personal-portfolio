@@ -1,165 +1,138 @@
 import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
-import { Send, MapPin, Phone, Mail, Loader2, MessageSquare } from 'lucide-react';
+import { Check, Copy, Loader2, Mail, MapPin, MessageCircle, Send } from 'lucide-react';
+import { Reveal } from './ui';
+import { SocialLinks } from './icons';
+import { supabase, isSupabaseReady } from '../lib/supabase';
+import { useLang } from '../i18n';
 
-export default function Contact() {
-  const formRef = useRef();
+const FORMSPREE_URL = 'https://formspree.io/f/xrpbbraa';
+const fieldCls =
+  'w-full rounded-2xl border border-ink/10 bg-paper px-4 py-3.5 outline-none transition placeholder:text-muted/60 focus:border-accent focus:bg-surface focus:ring-4 focus:ring-accent/10';
+
+function toWhatsApp(phone) {
+  const digits = (phone || '').replace(/\D/g, '');
+  return digits.startsWith('0') ? `62${digits.slice(1)}` : digits;
+}
+
+export default function Contact({ profile }) {
+  const { t } = useLang();
+  const formRef = useRef(null);
   const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setCopied(true);
+      toast.success(t('contact.copied'));
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      window.location.href = `mailto:${profile.email}`;
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     const formData = new FormData(formRef.current);
+    const { name, email, message } = Object.fromEntries(formData);
 
-    try {
-      const response = await fetch('https://formspree.io/f/xrpbbraa', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        toast.success('Pesan Anda berhasil terkirim!');
-        formRef.current.reset();
-      } else {
-        toast.error(data.error || 'Gagal mengirim pesan, silakan coba lagi.');
-      }
-    } catch (error) {
-      toast.error('Terjadi kesalahan jaringan, silakan coba lagi.');
-    } finally {
-      setLoading(false);
+    const tasks = [
+      fetch(FORMSPREE_URL, { method: 'POST', body: formData, headers: { Accept: 'application/json' } }).then((r) => {
+        if (!r.ok) throw new Error('formspree');
+      }),
+    ];
+    if (isSupabaseReady) {
+      tasks.push(
+        supabase
+          .from('messages')
+          .insert({ name, email, message })
+          .then(({ error }) => {
+            if (error) throw error;
+          })
+      );
+    }
+    const results = await Promise.allSettled(tasks);
+    setLoading(false);
+    if (results.some((r) => r.status === 'fulfilled')) {
+      toast.success(t('contact.success'));
+      formRef.current.reset();
+    } else {
+      toast.error(t('contact.failed'));
     }
   };
 
+  const items = [
+    profile.email && { Icon: Mail, label: 'Email', value: profile.email, action: copyEmail },
+    profile.phone && { Icon: MessageCircle, label: t('contact.whatsapp'), value: profile.phone, href: `https://wa.me/${toWhatsApp(profile.phone)}` },
+    profile.location && { Icon: MapPin, label: t('contact.location'), value: profile.location },
+  ].filter(Boolean);
+
   return (
-    <section id="contact" className="py-20 px-6 max-w-7xl mx-auto">
-      {/* Header Section */}
-      <div className="mb-12">
-        <span className="text-blue-600 dark:text-blue-400 font-medium text-sm tracking-wide uppercase">
-          Get In Touch
-        </span>
-        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mt-1">
-          Contact Me
-        </h2>
-      </div>
+    <section id="contact" className="py-20 sm:py-24">
+      <div className="container-x">
+        <Reveal className="relative isolate grid grid-cols-1 gap-10 overflow-hidden rounded-[2rem] bg-accent p-6 sm:p-10 lg:grid-cols-2 lg:gap-14 lg:p-14">
+          <div className="pointer-events-none absolute -right-24 -top-24 -z-10 h-80 w-80 rounded-full border-[40px] border-white/10" />
+          <div className="pointer-events-none absolute -bottom-32 left-1/3 -z-10 h-72 w-72 rounded-full bg-sun/30 blur-3xl" />
 
-      <div className="grid md:grid-cols-12 gap-8 items-start">
-        {/* Info Kontak Side */}
-        <div className="md:col-span-5 space-y-6">
-          <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base leading-relaxed">
-            Feel free to reach out if you have any questions, potential projects, or collaboration opportunities. I will get back to you as soon as possible!
-          </p>
+          <div className="flex flex-col text-white">
+            <span className="inline-flex items-center gap-2 self-start rounded-full bg-white/15 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider">
+              <span className="h-2 w-2 rounded-full bg-sun" />
+              {t('contact.label')}
+            </span>
+            <h2 className="mt-5 text-[clamp(2.2rem,5vw,3.5rem)] font-extrabold leading-[1.05]">{t('contact.title')}</h2>
+            <p className="mt-4 max-w-md leading-relaxed text-white/80">{t('contact.text')}</p>
 
-          <div className="space-y-4 pt-2">
-            {/* Card Location */}
-            <div className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-all duration-300 group">
-              <div className="p-3 rounded-xl bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
-                <MapPin size={20} />
-              </div>
-              <div>
-                <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Location</p>
-                <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">Serang, Banten, Indonesia</p>
-              </div>
+            <div className="mt-8 space-y-3">
+              {items.map(({ Icon, label, value, href, action }) => {
+                const Wrapper = href ? 'a' : 'div';
+                return (
+                  <Wrapper
+                    key={label}
+                    {...(href ? { href, target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    className="flex items-center gap-4 rounded-2xl bg-white/10 p-3.5 transition-colors hover:bg-white/15"
+                  >
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white text-accent">
+                      <Icon size={19} />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-xs font-semibold text-white/65">{label}</span>
+                      <span className="block truncate font-semibold">{value}</span>
+                    </span>
+                    {action && (
+                      <button onClick={action} aria-label="Salin" className="grid h-9 w-9 place-items-center rounded-full text-white/80 hover:bg-white/15">
+                        {copied ? <Check size={16} /> : <Copy size={16} />}
+                      </button>
+                    )}
+                  </Wrapper>
+                );
+              })}
             </div>
-
-            {/* Card Phone */}
-            <div className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-all duration-300 group">
-              <div className="p-3 rounded-xl bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
-                <Phone size={20} />
-              </div>
-              <div>
-                <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Phone / WhatsApp</p>
-                <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">087768808324</p>
-              </div>
-            </div>
-
-            {/* Card Email */}
-            <div className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-800 hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-all duration-300 group">
-              <div className="p-3 rounded-xl bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
-                <Mail size={20} />
-              </div>
-              <div>
-                <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Email Address</p>
-                <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">dendipratamar@gmail.com</p>
-              </div>
-            </div>
+            <SocialLinks profile={profile} className="-ml-2 mt-6" itemClassName="!text-white/80 hover:!bg-white/15 hover:!text-white" />
           </div>
-        </div>
 
-        {/* Form Kontak Side */}
-        <div className="md:col-span-7 relative group">
-          {/* Subtle Glow Background Effect */}
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-500"></div>
-
-          <form 
-            ref={formRef} 
-            onSubmit={handleSubmit} 
-            className="relative space-y-5 bg-white dark:bg-slate-900/90 backdrop-blur-xl p-8 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none"
-          >
-            <div className="flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
-              <MessageSquare className="text-blue-600 dark:text-blue-400" size={20} />
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Send a Message</h3>
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 self-start rounded-3xl bg-surface p-6 shadow-[0_30px_60px_-25px_rgb(15_23_42/0.5)] sm:p-8">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <label className="block">
+                <span className="mb-2 block text-sm font-semibold">{t('contact.name')}</span>
+                <input name="name" required placeholder={t('contact.namePh')} className={fieldCls} />
+              </label>
+              <label className="block">
+                <span className="mb-2 block text-sm font-semibold">{t('contact.email')}</span>
+                <input name="email" type="email" required placeholder="you@mail.com" className={fieldCls} />
+              </label>
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Your Name</label>
-                <input 
-                  type="text" 
-                  name="name" 
-                  placeholder="John Doe"
-                  required 
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700/70 bg-slate-50/50 dark:bg-slate-800/50 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:bg-white dark:focus:bg-slate-900 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none text-sm transition-all duration-200" 
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Your Email</label>
-                <input 
-                  type="email" 
-                  name="email" 
-                  placeholder="john@example.com"
-                  required 
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700/70 bg-slate-50/50 dark:bg-slate-800/50 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:bg-white dark:focus:bg-slate-900 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none text-sm transition-all duration-200" 
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Message</label>
-              <textarea 
-                name="message" 
-                rows="4" 
-                placeholder="How can I help you?"
-                required 
-                className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700/70 bg-slate-50/50 dark:bg-slate-800/50 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:bg-white dark:focus:bg-slate-900 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none text-sm transition-all duration-200 resize-none"
-              ></textarea>
-            </div>
-
-            <button 
-              type="submit" 
-              disabled={loading}
-              className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium text-sm rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-blue-500/25 active:scale-[0.99] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed group/btn"
-            >
-              {loading ? (
-                <>
-                  <Loader2 size={18} className="animate-spin" />
-                  <span>Sending Message...</span>
-                </>
-              ) : (
-                <>
-                  <Send size={18} className="group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform duration-200" />
-                  <span>Send Message</span>
-                </>
-              )}
+            <label className="block">
+              <span className="mb-2 block text-sm font-semibold">{t('contact.message')}</span>
+              <textarea name="message" required rows={6} placeholder={t('contact.messagePh')} className={`${fieldCls} resize-none`} />
+            </label>
+            <button type="submit" disabled={loading} className="btn-primary w-full !py-4 disabled:opacity-60">
+              {loading ? <Loader2 size={18} className="animate-spin" /> : <Send size={16} />}
+              {loading ? t('cta.sending') : t('cta.send')}
             </button>
           </form>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

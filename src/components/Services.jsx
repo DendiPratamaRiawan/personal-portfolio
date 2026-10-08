@@ -1,55 +1,54 @@
-import { motion } from 'framer-motion';
-import { portfolioData } from '../data/portfolioData';
-import SpotlightCard from './SpotlightCard';
+import { ArrowUpRight, Cpu, Database, Globe, Headset, Network, ShieldCheck } from 'lucide-react';
+import { Reveal, SectionHead } from './ui';
+import { useLang } from '../i18n';
 
-export default function Services() {
+const STYLES = [
+  { Icon: Network, cls: 'bg-sky text-accent' },
+  { Icon: Headset, cls: 'bg-mint/15 text-mint' },
+  { Icon: Globe, cls: 'bg-coral/15 text-coral' },
+  { Icon: Database, cls: 'bg-sun/25 text-[#a86b00]' },
+  { Icon: ShieldCheck, cls: 'bg-sky text-accent' },
+  { Icon: Cpu, cls: 'bg-mint/15 text-mint' },
+];
+
+export default function Services({ services }) {
+  const { t, tr } = useLang();
+  if (!services.length) return null;
+
   return (
-    <section id="services" className="py-16 px-6 max-w-7xl mx-auto">
-      {/* Header & Hire Me Button */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
-        <div>
-          <span className="text-blue-600 dark:text-blue-400 font-medium text-sm">What I Offer</span>
-          <h2 className="text-3xl font-bold text-slate-900 dark:text-white">My Services</h2>
-        </div>
-        
-        <a 
-          href="#contact" 
-          className="inline-flex items-center justify-center px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-xl transition shadow-md shadow-blue-500/20 active:scale-95"
-        >
-          Hire Me
-        </a>
-      </div>
+    <section id="services" className="py-20 sm:py-24">
+      <div className="container-x">
+        <SectionHead label={t('services.label')} title={t('services.title')} color="mint" />
 
-      {/* Grid Services (4 Kolom) dengan Spotlight Card */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {portfolioData.services.map((srv, idx) => (
-          <motion.div 
-            key={idx}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: idx * 0.1 }}
-          >
-            <SpotlightCard 
-              className="p-5 flex flex-col justify-between h-full group"
-              spotlightColor="rgba(0, 229, 255, 0.2)"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <h3 className="font-bold text-slate-900 dark:text-white text-base group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                    {srv.title}
-                  </h3>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map((s, i) => {
+            const { Icon, cls } = STYLES[i % STYLES.length];
+            return (
+              <Reveal key={s.id} delay={(i % 3) * 0.06} className="card group flex flex-col p-7 transition-transform duration-300 hover:-translate-y-1">
+                <div className="flex items-start justify-between">
+                  <span className={`grid h-14 w-14 place-items-center rounded-2xl transition-transform duration-300 group-hover:-rotate-6 ${cls}`}>
+                    <Icon size={24} />
+                  </span>
+                  {s.level && <span className="rounded-full bg-paper px-3 py-1 text-xs font-bold text-muted">{tr(s, 'level')}</span>}
                 </div>
-                <span className="inline-block text-xs font-semibold px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 mb-2">
-                  {srv.level}
-                </span>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                  {srv.desc}
-                </p>
+                <h3 className="mt-6 text-xl font-bold leading-snug">{tr(s, 'title')}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{tr(s, 'description')}</p>
+              </Reveal>
+            );
+          })}
+          <Reveal delay={0.12}>
+            <a href="#contact" className="group relative flex h-full min-h-[14rem] flex-col justify-between overflow-hidden rounded-3xl bg-sun p-7 text-ink shadow-soft transition-transform duration-300 hover:-translate-y-1">
+              <span className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-white/30" />
+              <span className="grid h-12 w-12 place-items-center self-end rounded-full bg-ink text-white transition-transform duration-300 group-hover:rotate-45">
+                <ArrowUpRight size={20} />
+              </span>
+              <div className="relative">
+                <h3 className="text-2xl font-bold leading-tight">{t('services.more')}</h3>
+                <p className="mt-2 text-sm font-medium text-ink/70">{t('services.moreText')}</p>
               </div>
-            </SpotlightCard>
-          </motion.div>
-        ))}
+            </a>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
