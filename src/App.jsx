@@ -6,6 +6,7 @@ import { About, Skills } from './components/About';
 import Experience from './components/Experience';
 import Activities from './components/Activities';
 import Projects from './components/Projects';
+import Publications from './components/Publications';
 import Services from './components/Services';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -18,7 +19,7 @@ export default function App() {
   const media = data.news.filter((n) => n.category === 'berita');
   const hasActivities = posts.length + media.length + data.activities.length > 0;
 
-  const links = ['about', 'skills', 'experience', hasActivities && 'activities', 'projects', 'services', 'contact'].filter(Boolean).map((id) => ({ id }));
+  const links = ['about', 'skills', 'experience', hasActivities && 'activities', 'projects', data.publications?.length > 0 && 'publications', 'services', 'contact'].filter(Boolean).map((id) => ({ id }));
 
   return (
     <MotionConfig reducedMotion="user">
@@ -31,6 +32,7 @@ export default function App() {
         <Experience experiences={data.experiences} />
         {hasActivities && <Activities posts={posts} media={media} photos={data.activities} />}
         <Projects projects={data.projects} certificates={data.certificates} />
+        <Publications items={data.publications || []} ownerName={data.profile.name} />
         <Services services={data.services} />
         <Contact profile={data.profile} />
       </main>

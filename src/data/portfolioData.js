@@ -164,5 +164,27 @@ export const portfolioData = {
     { image_url: activityImg4, caption: 'Perawatan perangkat', ...en({ caption: 'Maintenance' }) },
   ]),
 
+  publications: withOrder([
+    {
+      title:
+        'Penguatan Keterampilan Praktik Mahasiswa Kebidanan melalui Uji Kelayakan dan Pemanfaatan SMARTHOM (Simulator Persalinan) di Laboratorium Universitas Faletehan',
+      authors: 'Feling Polwandari, Dewi Rahmawati, Muchamad Fajar Arifin, Sita Aulia Adzani, Rindiani Rindiani, Kaila Amatul Azhar, Dendi Pratama Riawan',
+      venue: 'SAFARI: Jurnal Pengabdian Masyarakat Indonesia, Vol. 6 No. 1 (2026)',
+      date_label: '2025',
+      link: 'https://doi.org/10.56910/safari.v6i1.3402',
+      ...en({
+        title:
+          "Strengthening Midwifery Students' Practical Skills through Feasibility Testing and Use of SMARTHOM (Childbirth Simulator) at the Universitas Faletehan Laboratory",
+      }),
+    },
+    {
+      title: 'Application of Logistic Regression Method for Predicting Diabetes Mellitus',
+      authors: 'Dendi Pratama Riawan, Dede Brahma Arianto',
+      venue: 'Ambidextrous: Journal of Innovation, Efficiency and Technology in Organization, Vol. 4 No. 3 (2026), pp. 204–211',
+      date_label: '2026',
+      link: 'https://journal.takaza.id/index.php/ambidextrous/article/view/539',
+    },
+  ]),
+
   news: [],
 };

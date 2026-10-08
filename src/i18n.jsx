@@ -4,7 +4,7 @@ const STORAGE_KEY = 'lang';
 
 const DICT = {
   id: {
-    nav: { about: 'Tentang', skills: 'Keahlian', experience: 'Pengalaman', activities: 'Kegiatan', projects: 'Proyek', services: 'Layanan', contact: 'Kontak' },
+    nav: { about: 'Tentang', skills: 'Keahlian', experience: 'Pengalaman', activities: 'Kegiatan', projects: 'Proyek', publications: 'Publikasi', services: 'Layanan', contact: 'Kontak' },
     cta: { contact: 'Hubungi saya', cv: 'Unduh CV', projects: 'Lihat proyek', readMore: 'Selengkapnya', readOn: 'Baca di', send: 'Kirim pesan', sending: 'Mengirim...', viewCredential: 'Lihat kredensial', source: 'Kode sumber', demo: 'Demo langsung', backTop: 'Kembali ke atas' },
     hero: {
       hello: 'Halo, saya',
@@ -25,6 +25,7 @@ const DICT = {
     experience: { label: 'Perjalanan', title: 'Pengalaman & pendidikan', work: 'Kerja', education: 'Pendidikan', organization: 'Organisasi', volunteer: 'Relawan' },
     activities: { label: 'Kegiatan saya', title: 'Apa saja yang sedang saya kerjakan', media: 'Diliput media', articles: 'artikel' },
     projects: { label: 'Portofolio', title: 'Proyek & sertifikat', projects: 'Proyek', certificates: 'Sertifikat', awards: 'Penghargaan', featured: 'Unggulan' },
+    publications: { label: 'Riset & tulisan', title: 'Publikasi ilmiah', read: 'Baca artikel' },
     services: { label: 'Layanan', title: 'Yang bisa saya bantu', more: 'Butuh hal lain?', moreText: 'Ceritakan kebutuhanmu — kita cari solusinya bersama.' },
     contact: {
       label: 'Kontak',
@@ -44,7 +45,7 @@ const DICT = {
     footer: { rights: 'Hak cipta dilindungi.' },
   },
   en: {
-    nav: { about: 'About', skills: 'Skills', experience: 'Experience', activities: 'Activities', projects: 'Projects', services: 'Services', contact: 'Contact' },
+    nav: { about: 'About', skills: 'Skills', experience: 'Experience', activities: 'Activities', projects: 'Projects', publications: 'Publications', services: 'Services', contact: 'Contact' },
     cta: { contact: 'Contact me', cv: 'Download CV', projects: 'View projects', readMore: 'Read more', readOn: 'Read on', send: 'Send message', sending: 'Sending...', viewCredential: 'View credential', source: 'Source code', demo: 'Live demo', backTop: 'Back to top' },
     hero: {
       hello: "Hi, I'm",
@@ -65,6 +66,7 @@ const DICT = {
     experience: { label: 'Journey', title: 'Experience & education', work: 'Work', education: 'Education', organization: 'Organization', volunteer: 'Volunteer' },
     activities: { label: 'My activities', title: "What I've been up to", media: 'In the media', articles: 'articles' },
     projects: { label: 'Portfolio', title: 'Projects & certificates', projects: 'Projects', certificates: 'Certificates', awards: 'Awards', featured: 'Featured' },
+    publications: { label: 'Research & writing', title: 'Publications', read: 'Read article' },
     services: { label: 'Services', title: 'How I can help', more: 'Need something else?', moreText: "Tell me what you need — let's figure it out together." },
     contact: {
       label: 'Contact',

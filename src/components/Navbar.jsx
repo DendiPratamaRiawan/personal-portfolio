@@ -58,7 +58,7 @@ export default function Navbar({ links }) {
           <Logo size={38} />
         </a>
 
-        <ul className="hidden items-center gap-1 lg:flex">
+        <ul className="hidden items-center gap-0.5 xl:flex">
           {links.map((l) => (
             <li key={l.id}>
               <a
@@ -76,7 +76,7 @@ export default function Navbar({ links }) {
           <a href="#contact" className="btn-primary hidden !py-2 sm:inline-flex">
             {t('cta.contact')}
           </a>
-          <button onClick={() => setOpen((o) => !o)} aria-label="Menu" aria-expanded={open} className="grid h-10 w-10 place-items-center rounded-xl bg-ink text-white lg:hidden">
+          <button onClick={() => setOpen((o) => !o)} aria-label="Menu" aria-expanded={open} className="grid h-10 w-10 place-items-center rounded-xl bg-ink text-white xl:hidden">
             {open ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
@@ -89,7 +89,7 @@ export default function Navbar({ links }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="mx-auto mt-2 max-w-6xl rounded-2xl bg-surface p-3 shadow-soft ring-1 ring-ink/5 lg:hidden"
+            className="mx-auto mt-2 max-w-6xl rounded-2xl bg-surface p-3 shadow-soft ring-1 ring-ink/5 xl:hidden"
           >
             <ul className="grid grid-cols-2 gap-1">
               {links.map((l) => (

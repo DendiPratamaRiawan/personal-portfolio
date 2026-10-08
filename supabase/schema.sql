@@ -173,6 +173,21 @@ create table if not exists public.news (
 );
 
 -- ---------------------------------------------------------------------
+--  Publications (jurnal / artikel ilmiah)
+-- ---------------------------------------------------------------------
+create table if not exists public.publications (
+  id          uuid primary key default gen_random_uuid(),
+  title       text not null,
+  authors     text,
+  venue       text,                   -- nama jurnal, volume, halaman
+  date_label  text,
+  link        text,                   -- DOI / URL artikel
+  sort_order  int  not null default 0,
+  created_at  timestamptz not null default now(),
+  updated_at  timestamptz not null default now()
+);
+
+-- ---------------------------------------------------------------------
 --  Messages dari form kontak
 -- ---------------------------------------------------------------------
 create table if not exists public.messages (
@@ -191,7 +206,7 @@ create table if not exists public.messages (
 do $$
 declare t text;
 begin
-  foreach t in array array['profile','skills','experiences','certificates','projects','services','activities','news']
+  foreach t in array array['profile','skills','experiences','certificates','projects','services','activities','news','publications']
   loop
     execute format('alter table public.%I add column if not exists translations jsonb not null default ''{}''::jsonb', t);
   end loop;
@@ -203,7 +218,7 @@ end $$;
 do $$
 declare t text;
 begin
-  foreach t in array array['profile','skills','experiences','certificates','projects','services','activities','news']
+  foreach t in array array['profile','skills','experiences','certificates','projects','services','activities','news','publications']
   loop
     execute format('drop trigger if exists trg_touch_%1$s on public.%1$s', t);
     execute format('create trigger trg_touch_%1$s before update on public.%1$s for each row execute function public.touch_updated_at()', t);
@@ -218,7 +233,7 @@ end $$;
 do $$
 declare t text;
 begin
-  foreach t in array array['profile','skills','experiences','certificates','projects','services','activities']
+  foreach t in array array['profile','skills','experiences','certificates','projects','services','activities','publications']
   loop
     execute format('alter table public.%I enable row level security', t);
     execute format('drop policy if exists "public read" on public.%I', t);

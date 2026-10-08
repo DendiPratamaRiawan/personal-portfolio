@@ -2,17 +2,65 @@
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Dendi Pratama Riawan — IT Support Specialist & Network Engineer. Portofolio, proyek, sertifikat, dan kegiatan." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#f7f9fc" />
+
+    <!-- ===== SEO ===== -->
+    <title>Dendi Pratama Riawan — IT Support Specialist &amp; Network Engineer</title>
+    <meta
+      name="description"
+      content="Portofolio Dendi Pratama Riawan: IT Support Specialist, Network Engineer, dan Junior Cyber Security. Proyek, keahlian, pengalaman, publikasi, dan kegiatan."
+    />
+    <link rel="canonical" href="https://prtmaar-portfolio.vercel.app/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Google Search Console (aktifkan setelah dapat kodenya, hapus tanda komentar) -->
+    <!-- <meta name="google-site-verification" content="KODE_DARI_SEARCH_CONSOLE" /> -->
+
+    <!-- ===== Open Graph (preview saat link dibagikan) ===== -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Dendi Pratama Riawan — IT Support Specialist &amp; Network Engineer" />
+    <meta property="og:description" content="Portfolio of Dendi Pratama Riawan: IT Support, Network Engineering, and Junior Cyber Security." />
+    <meta property="og:url" content="https://prtmaar-portfolio.vercel.app/" />
+
+    <!-- ===== Structured data ===== -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Dendi Pratama Riawan",
+        "url": "https://prtmaar-portfolio.vercel.app/",
+        "jobTitle": "IT Support Specialist & Network Engineer",
+        "description": "Informatics student at Universitas Faletehan focused on IT Support, Network Engineering, and Junior Cyber Security.",
+        "knowsAbout": ["Network Configuration", "Sophos Firewall", "Active Directory", "Penetration Testing", "Log Analysis & SIEM", "React Native"],
+        "sameAs": ["https://github.com/DendiPratamaRiawan", "https://www.linkedin.com/in/dendipratamar", "https://www.instagram.com/prtmaar_"]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Dendi Pratama Riawan",
+        "alternateName": "Dendi Portfolio",
+        "url": "https://prtmaar-portfolio.vercel.app/"
+      }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <title>Dendi Pratama Riawan — Portfolio</title>
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- Fallback untuk crawler/browser tanpa JavaScript -->
+    <noscript>
+      <h1>Dendi Pratama Riawan</h1>
+      <p>IT Support Specialist, Network Engineer, and Junior Cyber Security.</p>
+      <p>Please enable JavaScript to view this portfolio.</p>
+    </noscript>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

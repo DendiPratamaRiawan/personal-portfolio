@@ -1,4 +1,4 @@
-import { Award, Briefcase, Cpu, FolderGit2, Images, Layers, Newspaper } from 'lucide-react';
+import { Award, BookOpen, Briefcase, Cpu, FolderGit2, Images, Layers, Newspaper } from 'lucide-react';
 
 const today = () => new Date().toISOString().slice(0, 10);
 
@@ -84,6 +84,23 @@ export const RESOURCES = {
       { name: 'issuer', label: 'Penerbit / penyelenggara', translate: true, type: 'text' },
       { name: 'image_url', label: 'Gambar sertifikat', type: 'image', folder: 'certificates' },
       { name: 'link', label: 'Link kredensial', type: 'url' },
+    ],
+  },
+
+  publications: {
+    table: 'publications',
+    label: 'Publikasi',
+    singular: 'publikasi',
+    icon: BookOpen,
+    title: (r) => r.title,
+    subtitle: (r) => [r.venue, r.date_label].filter(Boolean).join(' · '),
+    defaults: () => ({}),
+    fields: [
+      { name: 'title', label: 'Judul artikel', translate: true, type: 'textarea', rows: 2, required: true },
+      { name: 'authors', label: 'Penulis', type: 'text', placeholder: 'Dendi Pratama Riawan, ...' },
+      { name: 'venue', label: 'Jurnal / penerbit', type: 'text', placeholder: 'Nama Jurnal, Vol. 1 No. 1 (2026)' },
+      { name: 'date_label', label: 'Tahun', type: 'text', placeholder: '2026', half: true },
+      { name: 'link', label: 'Link DOI / artikel', type: 'url', half: true },
     ],
   },
 

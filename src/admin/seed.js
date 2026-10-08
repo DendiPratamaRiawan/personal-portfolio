@@ -2,7 +2,7 @@ import { supabase } from '../lib/supabase';
 import { portfolioData } from '../data/portfolioData';
 import { uploadFile } from './storage';
 
-export const SEED_TABLES = ['skills', 'experiences', 'services', 'certificates', 'projects', 'activities'];
+export const SEED_TABLES = ['skills', 'experiences', 'services', 'certificates', 'projects', 'activities', 'publications'];
 const IMAGE_FOLDERS = { certificates: 'certificates', projects: 'projects', activities: 'activities' };
 
 // Salin data lokal (src/data/portfolioData.js) beserta gambarnya ke Supabase.

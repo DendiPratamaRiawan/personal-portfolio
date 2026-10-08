@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { supabase, isSupabaseReady } from '../lib/supabase';
 import { portfolioData as fallbackData } from '../data/portfolioData';
 
-const CACHE_KEY = 'portfolio-cache-v2';
-const LIST_TABLES = ['skills', 'experiences', 'certificates', 'projects', 'services', 'activities', 'news'];
+const CACHE_KEY = 'portfolio-cache-v3';
+const LIST_TABLES = ['skills', 'experiences', 'certificates', 'projects', 'services', 'activities', 'publications', 'news'];
 
 function readCache() {
   try {
